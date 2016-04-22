@@ -11,16 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160325080257) do
+ActiveRecord::Schema.define(version: 20160421062212) do
+
+  create_table "areas", force: :cascade do |t|
+    t.string   "address",    limit: 255
+    t.integer  "x",          limit: 4
+    t.integer  "y",          limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "weathers", force: :cascade do |t|
-    t.datetime "date"
+    t.date     "date"
     t.string   "state",      limit: 255
     t.string   "image",      limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "temp",       limit: 4
     t.integer  "hour",       limit: 4
+    t.integer  "area_id",    limit: 4
   end
 
+  add_index "weathers", ["area_id"], name: "index_weathers_on_area_id", using: :btree
+
+  add_foreign_key "weathers", "areas"
 end

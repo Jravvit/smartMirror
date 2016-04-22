@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
 
-  scope module: :v1 do
-    get '/weathers/tmp', to: 'weathers#tmp'
-    get '/weathers/raw', to: 'weathers#raw'
+scope module: "v1" do
     get '/weathers/today', to: 'weathers#today'
+    get '/weathers/locale', to: 'weathers#locale'
     resources :weathers
   end
 

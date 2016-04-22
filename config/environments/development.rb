@@ -40,5 +40,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # Set ActiveRecord time zone to local
-  ActiveRecord::Base.default_timezone = :local
+  # ActiveRecord::Base.default_timezone = :local
 end

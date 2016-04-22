@@ -18,7 +18,15 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+set :output, "#{path}/log/cron.log"
 
-every :hour do
-  runner "WeathersController.insert_today_weather"
+=begin
+every 1.day, :at => '6:00am' do
+  runner "Weather.insert_today_weather" , :environment => "development"
+end
+=end
+
+
+every 1.day, :at => '6:00am' do
+  runner "Weather.insert_today_weather_cron" , :environment => "development"
 end
