@@ -4,6 +4,7 @@ scope module: "v1" do
     get '/weathers/today', to: 'weathers#today'
     get '/weathers/locale', to: 'weathers#locale'
     resources :weathers
+    resources :youtube
   end
 
 
