@@ -25,6 +25,7 @@ module V1
       #@weather = Weather.where("date = ? and hour = ?",get_today_date, get_current_hour)
       @area = Area.last
       @weather = @area.weathers.where("date = ? and hour = ?",get_today_date, get_current_hour)
+      #@weather = @area.weathers.last
       render json: @weather
     end
 

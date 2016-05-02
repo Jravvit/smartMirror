@@ -8,6 +8,7 @@ class YoutubeApi
 
     def initialize(api_key)
       @api_key = api_key
+      @youtube_api = nil
       @query = nil
       @max_result = 5
       @next_page = nil
@@ -55,14 +56,11 @@ class YoutubeApi
     def get query: @query, max_result: @max_result, page_token: nil, type: nil
       #set api options and return option values
 
-      youtube_api = YOUTUBE_API_URL.clone
-      youtube_api.concat "part=#{PART}+"
-      youtube_api.concat "&q=#{query}"
-      youtube_api.concat "&maxResults=#{max_result+1}"
-      youtube_api.concat "&pageToken=#{page_token}"
-      set_options query, max_result
+      api_query = set_query query: query, max_result: max_result, page_token: page_token, type: type
 
-      json_list = get_list youtube_api
+        puts  api_query
+      json_list = get_list @youtube_api
+
       if type.eql?"raw"
         return json_list
       else
@@ -70,10 +68,24 @@ class YoutubeApi
       end
     end
 
+    def set_query query: @query, max_result: @max_result, page_token: nil, type: nil
+
+      @youtube_api = YOUTUBE_API_URL.clone
+      @youtube_api.concat "part=#{PART}+"
+      @youtube_api.concat "&q=#{query}"
+      @youtube_api.concat "&maxResults=#{max_result+1}"
+      @youtube_api.concat "&pageToken=#{page_token}"
+      set_options query, max_result
+
+      return youtube_api
+    end
+
     def set_options query, max_result
       if !@query.eql?query then @query = query end
       if !@max_result.eql?max_result then  @max_result = max_result end
     end
+
+
 
     def get_list api_query
       JSON.parse(Mechanize.new.get("#{api_query}&key=#@api_key&#{FIELDS}").body)
